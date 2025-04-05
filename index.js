@@ -144,6 +144,37 @@ app.delete('/items/:id', (req, res) => {
   res.json(deletedItem[0]);
 });
 
+
+app.get('/swagger.html', (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Swagger UI</title>
+        <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+      </head>
+      <body>
+        <div id="swagger-ui"></div>
+        <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+        <script>
+          window.onload = () => {
+            SwaggerUIBundle({
+              url: '/swagger.json',
+              dom_id: '#swagger-ui',
+            });
+          };
+        </script>
+      </body>
+    </html>
+  `);
+});
+
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`Swagger docs at http://localhost:${PORT}/api-docs`);
